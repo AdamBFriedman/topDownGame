@@ -15,5 +15,15 @@ playerImage.src = './images/playerDown.png';
 
 mapImage.onload = () => {
   c.drawImage(mapImage, 0, -150);
-  c.drawImage(playerImage, canvas.width / 2, canvas.height / 2);
+  c.drawImage(
+    playerImage,
+    0,
+    0,
+    playerImage.width / 4,
+    playerImage.height,
+    canvas.width / 2 - playerImage.width / 4 / 2,
+    canvas.height / 2 - playerImage.height / 2,
+    playerImage.width / 4,
+    playerImage.height
+  );
 };
