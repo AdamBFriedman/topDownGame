@@ -13,7 +13,8 @@ mapImage.src = './images/Game Map.png';
 const playerImage = new Image();
 playerImage.src = './images/playerDown.png';
 
-mapImage.onload = () => {
+function animate() {
+  window.requestAnimationFrame(animate);
   c.drawImage(mapImage, 0, -150);
   c.drawImage(
     playerImage,
@@ -26,4 +27,25 @@ mapImage.onload = () => {
     playerImage.width / 4,
     playerImage.height
   );
-};
+}
+animate();
+
+window.addEventListener('keydown', (e) => {
+  switch (e.key) {
+    case 'w':
+      console.log('w');
+      break;
+    case 'a':
+      console.log('a');
+      break;
+    case 's':
+      console.log('s');
+      break;
+    case 'd':
+      console.log('d');
+      break;
+
+    default:
+      break;
+  }
+});
