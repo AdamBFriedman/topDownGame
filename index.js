@@ -13,9 +13,28 @@ mapImage.src = './images/Game Map.png';
 const playerImage = new Image();
 playerImage.src = './images/playerDown.png';
 
+class Sprite {
+  constructor({ position, image }) {
+    this.position = position;
+    this.image = image;
+  }
+
+  draw() {
+    c.drawImage(this.image, 0, -150);
+  }
+}
+
+const background = new Sprite({
+  position: {
+    x: 0,
+    y: -150,
+  },
+  image: mapImage,
+});
+
 function animate() {
   window.requestAnimationFrame(animate);
-  c.drawImage(mapImage, 0, -150);
+  background.draw();
   c.drawImage(
     playerImage,
     0,
