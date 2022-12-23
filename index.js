@@ -36,13 +36,25 @@ const keys = {
   w: {
     pressed: false,
   },
+  arrowUp: {
+    pressed: false,
+  },
   a: {
+    pressed: false,
+  },
+  arrowLeft: {
     pressed: false,
   },
   s: {
     pressed: false,
   },
+  arrowDown: {
+    pressed: false,
+  },
   d: {
+    pressed: false,
+  },
+  arrowRight: {
     pressed: false,
   },
 };
@@ -62,12 +74,25 @@ function animate() {
     playerImage.height
   );
 
-  if (keys.w.pressed && lastKey === 'w') background.position.y += 3;
-  else if (keys.a.pressed && lastKey === 'a')
+  if (
+    (keys.w.pressed && lastKey === 'w') ||
+    (keys.arrowUp.pressed && lastKey === 'ArrowUp')
+  )
+    background.position.y += 3;
+  else if (
+    (keys.a.pressed && lastKey === 'a') ||
+    (keys.arrowLeft.pressed && lastKey === 'ArrowLeft')
+  )
     background.position.x += 3;
-  else if (keys.s.pressed && lastKey === 's')
+  else if (
+    (keys.s.pressed && lastKey === 's') ||
+    (keys.arrowDown.pressed && lastKey === 'ArrowDown')
+  )
     background.position.y -= 3;
-  else if (keys.d.pressed && lastKey === 'd')
+  else if (
+    (keys.d.pressed && lastKey === 'd') ||
+    (keys.arrowRight.pressed && lastKey === 'ArrowRight')
+  )
     background.position.x -= 3;
 }
 animate();
@@ -75,23 +100,42 @@ animate();
 let lastKey = '';
 window.addEventListener('keydown', (e) => {
   switch (e.key) {
+    // Up
     case 'w':
       keys.w.pressed = true;
       lastKey = 'w';
       break;
+    case 'ArrowUp':
+      keys.arrowUp.pressed = true;
+      lastKey = 'ArrowUp';
+      break;
+    // Left
     case 'a':
       keys.a.pressed = true;
       lastKey = 'a';
       break;
+    case 'ArrowLeft':
+      keys.arrowLeft.pressed = true;
+      lastKey = 'ArrowLeft';
+      break;
+    // Down
     case 's':
       keys.s.pressed = true;
       lastKey = 's';
       break;
+    case 'ArrowDown':
+      keys.arrowDown.pressed = true;
+      lastKey = 'ArrowDown';
+      break;
     case 'd':
+      // Right
       keys.d.pressed = true;
       lastKey = 'd';
       break;
-
+    case 'ArrowRight':
+      keys.arrowRight.pressed = true;
+      lastKey = 'ArrowRight';
+      break;
     default:
       break;
   }
@@ -99,19 +143,34 @@ window.addEventListener('keydown', (e) => {
 
 window.addEventListener('keyup', (e) => {
   switch (e.key) {
+    // Up
     case 'w':
       keys.w.pressed = false;
       break;
+    case 'ArrowUp':
+      keys.arrowUp.pressed = false;
+      break;
+    // Left
     case 'a':
       keys.a.pressed = false;
       break;
+    case 'ArrowLeft':
+      keys.arrowLeft.pressed = false;
+      break;
+    // Down
     case 's':
       keys.s.pressed = false;
       break;
+    case 'ArrowDown':
+      keys.arrowDown.pressed = false;
+      break;
+    // Right
     case 'd':
       keys.d.pressed = false;
       break;
-
+    case 'ArrowRight':
+      keys.arrowRight.pressed = false;
+      break;
     default:
       break;
   }
