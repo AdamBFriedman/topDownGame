@@ -4,9 +4,6 @@ const c = canvas.getContext('2d');
 canvas.width = 1600;
 canvas.height = 780;
 
-c.fillStyle = 'white';
-c.fillRect(0, 0, canvas.width, canvas.height);
-
 const mapImage = new Image();
 mapImage.src = './images/Game Map.png';
 
