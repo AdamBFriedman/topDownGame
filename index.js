@@ -1,7 +1,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
-canvas.width = 1700;
+canvas.width = 1600;
 canvas.height = 780;
 
 c.fillStyle = 'white';
