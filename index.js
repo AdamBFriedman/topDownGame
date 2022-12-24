@@ -58,15 +58,39 @@ const playerImage = new Image();
 playerImage.src = './images/playerDown.png';
 
 class Sprite {
-  constructor({ position, image }) {
+  constructor({ position, image, frames = { max: 1 } }) {
     this.position = position;
     this.image = image;
+    this.frames = frames;
   }
 
   draw() {
-    c.drawImage(this.image, this.position.x, this.position.y);
+    c.drawImage(
+      this.image,
+      0,
+      0,
+      this.image.width / this.frames.max,
+      this.image.height,
+      this.position.x,
+      this.position.y,
+      this.image.width / this.frames.max,
+      this.image.height
+    );
   }
 }
+
+const player = new Sprite({
+  position: {
+    // 192 is the actual width of the sprite image
+    x: canvas.width / 2 - 192 / 4 / 2,
+    // 68 is the actual height of the sprite image
+    y: canvas.height / 2 - 68 / 2,
+  },
+  image: playerImage,
+  frames: {
+    max: 4,
+  },
+});
 
 const background = new Sprite({
   position: {
@@ -103,44 +127,52 @@ const keys = {
   },
 };
 
+const testBoundary = new Boundary({ position: { x: 400, y: 400 } });
+
+const movables = [background, testBoundary];
 function animate() {
   window.requestAnimationFrame(animate);
   background.draw();
-  boundaries.forEach((boundary) => {
-    boundary.draw();
-  });
-  c.drawImage(
-    playerImage,
-    0,
-    0,
-    playerImage.width / 4,
-    playerImage.height,
-    canvas.width / 2 - playerImage.width / 4 / 2,
-    canvas.height / 2 - playerImage.height / 2,
-    playerImage.width / 4,
-    playerImage.height
-  );
+  testBoundary.draw();
+  player.draw();
+  //   boundaries.forEach((boundary) => {
+  //     boundary.draw();
+  //   });
+  //   c.drawImage(
+  //     playerImage,
+  //     0,
+  //     0,
+  //     playerImage.width / 4,
+  //     playerImage.height,
+  //     canvas.width / 2 - playerImage.width / 4 / 2,
+  //     canvas.height / 2 - playerImage.height / 2,
+  //     playerImage.width / 4,
+  //     playerImage.height
+  //   );
+
+  // Check if right side of player > left side of collision block
 
   if (
     (keys.w.pressed && lastKey === 'w') ||
     (keys.arrowUp.pressed && lastKey === 'ArrowUp')
-  )
-    background.position.y += 3;
-  else if (
+  ) {
+    movables.forEach((movable) => (movable.position.y += 3));
+  } else if (
     (keys.a.pressed && lastKey === 'a') ||
     (keys.arrowLeft.pressed && lastKey === 'ArrowLeft')
-  )
-    background.position.x += 3;
-  else if (
+  ) {
+    movables.forEach((movable) => (movable.position.x += 3));
+  } else if (
     (keys.s.pressed && lastKey === 's') ||
     (keys.arrowDown.pressed && lastKey === 'ArrowDown')
-  )
-    background.position.y -= 3;
-  else if (
+  ) {
+    movables.forEach((movable) => (movable.position.y -= 3));
+  } else if (
     (keys.d.pressed && lastKey === 'd') ||
     (keys.arrowRight.pressed && lastKey === 'ArrowRight')
-  )
-    background.position.x -= 3;
+  ) {
+    movables.forEach((movable) => (movable.position.x -= 3));
+  }
 }
 animate();
 
