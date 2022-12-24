@@ -4,6 +4,53 @@ const c = canvas.getContext('2d');
 canvas.width = 1600;
 canvas.height = 780;
 
+const collisionsMap = [];
+
+for (let i = 0; i < collisions.length; i += 70) {
+  collisionsMap.push(collisions.slice(i, i + 70));
+}
+
+class Boundary {
+  static width = 48;
+  static height = 48;
+  constructor({ position }) {
+    this.position = position;
+    // tiles were increased by 4x and started at 12x12
+    this.width = 48;
+    this.height = 48;
+  }
+
+  draw() {
+    c.fillStyle = 'red';
+    c.fillRect(
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+}
+
+const boundaries = [];
+const offset = {
+  x: 0,
+  y: -150,
+};
+
+collisionsMap.forEach((row, i) => {
+  row.forEach((symbol, j) => {
+    if (symbol === 1025)
+      boundaries.push(
+        new Boundary({
+          position: {
+            x: j * Boundary.width + offset.x,
+            y: i * Boundary.height + offset.y,
+          },
+        })
+      );
+  });
+});
+
 const mapImage = new Image();
 mapImage.src = './images/Game Map.png';
 
@@ -23,8 +70,8 @@ class Sprite {
 
 const background = new Sprite({
   position: {
-    x: 0,
-    y: -150,
+    x: offset.x,
+    y: offset.y,
   },
   image: mapImage,
 });
@@ -59,6 +106,9 @@ const keys = {
 function animate() {
   window.requestAnimationFrame(animate);
   background.draw();
+  boundaries.forEach((boundary) => {
+    boundary.draw();
+  });
   c.drawImage(
     playerImage,
     0,
